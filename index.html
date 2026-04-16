@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEMU Library Management System — Smart. Modern. Powerful.</title>
+    <meta name="description" content="VEMU Institute of Technology Library Management System — Browse, borrow, and manage academic resources with our modern, intelligent library platform.">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ANIMATED BACKGROUND -->
+    <div class="home-bg-canvas">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    <div class="home-grid-overlay"></div>
+    <div class="home-particles" id="homeParticles"></div>
+
+    <!-- HEADER -->
+    <header id="mainHeader">
+        <a href="index.html" class="logo">
+            <img src="vemu-logo.jpeg" alt="VEMU Logo">
+            <span>VEMU LIBRARY</span>
+        </a>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>Smart Library Management System</span>
+        </div>
+
+        <h1>Welcome to <br><span class="gradient-text">VEMU Institute of Technology</span></h1>
+
+        <p>Experience the future of academic library management. Browse 50,000+ books, track your reading, manage dues — all in one powerful platform built for students, faculty, and administrators.</p>
+
+        <a href="login.html" class="hero-cta">
+            <span>Go To Library Portal</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </section>
+
+    <!-- STATISTICS -->
+    <section class="stats-container">
+        <div class="stat-card reveal">
+            <h3 class="stat-number" data-target="50000">0</h3>
+            <p>Books Available</p>
+        </div>
+        <div class="stat-card reveal">
+            <h3 class="stat-number" data-target="1250">0</h3>
+            <p>Students Registered</p>
+        </div>
+        <div class="stat-card reveal">
+            <h3 class="stat-number">24/7</h3>
+            <p>Online Access</p>
+        </div>
+        <div class="stat-card reveal">
+            <h3 class="stat-number" data-target="15">0</h3>
+            <p>Days Borrow Limit</p>
+        </div>
+    </section>
+
+    <!-- KEY FEATURES -->
+    <section class="features">
+        <div class="features-title reveal">
+            <h2>Why Choose VEMU Library?</h2>
+            <p>Powerful features designed for modern academic excellence</p>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="feature-icon">📚</div>
+            <h3>Easy Book Management</h3>
+            <p>Browse and manage the library collection easily. Search by book title, author, or book ID instantly.</p>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="feature-icon">👥</div>
+            <h3>Multi-Role Access</h3>
+            <p>Different access for Admin, Librarian, Faculty and Students with role-specific smart dashboards.</p>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="feature-icon">📊</div>
+            <h3>Smart Tracking</h3>
+            <p>Track issued books, due dates, returns and overdue books with real-time automated analytics.</p>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure System</h3>
+            <p>Safe login system with role-based authentication and enterprise-grade data protection.</p>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="section-title reveal">
+            <h2>🚀 How It Works</h2>
+            <p>Get started in three simple steps</p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step-item reveal">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h3>Login to Your Account</h3>
+                    <p>Select your role — Admin, Librarian, Faculty, or Student — and sign in with your secure credentials to access your personalized dashboard.</p>
+                </div>
+            </div>
+            <div class="step-item reveal">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h3>Access Your Portal</h3>
+                    <p>Once logged in, explore your feature-rich dashboard with real-time stats, notifications, and tools tailored to your academic role.</p>
+                </div>
+            </div>
+            <div class="step-item reveal">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h3>Manage Library Resources</h3>
+                    <p>Borrow books, return books, donate to the library, track fines, and manage records — all from your fingertips.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>VEMU Library Management System</h3>
+        <p>Providing Excellent Academic Resources Since 2005</p>
+        <div class="footer-divider"></div>
+        <p>
+            <i class="fas fa-envelope"></i> library@vemu.edu.in &nbsp;&bull;&nbsp;
+            <i class="fas fa-phone"></i> +91 12345 67890
+        </p>
+        <p class="copyright">© 2026 VEMU Institute of Technology. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Particle generator
+        const particleContainer = document.getElementById('homeParticles');
+        if (particleContainer) {
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const colors = ['rgba(139,92,246,0.5)', 'rgba(6,182,212,0.4)', 'rgba(245,158,11,0.3)', 'rgba(236,72,153,0.3)'];
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${Math.random() * 4 + 2}px;
+                    height: ${Math.random() * 4 + 2}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation-duration: ${Math.random() * 20 + 10}s;
+                    animation-delay: ${Math.random() * 15}s;
+                `;
+                particleContainer.appendChild(p);
+            }
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('mainHeader')?.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Animated counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.target);
+                    if (!target) return;
+                    let current = 0;
+                    const step = Math.max(1, Math.ceil(target / 80));
+                    const timer = setInterval(() => {
+                        current = Math.min(current + step, target);
+                        entry.target.textContent = current.toLocaleString('en-IN') + (target >= 1000 ? '+' : '');
+                        if (current >= target) clearInterval(timer);
+                    }, 16);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+    </script>
+
+</body>
+
+</html>

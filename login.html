@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>VEMU Library — Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body class="login-body">
+
+    <div class="login-bg">
+        <div class="mesh-gradient"></div>
+        <div class="grid-pattern"></div>
+        <div class="floating-books" id="floatingBooks"></div>
+        <div class="aurora-orb"></div>
+        <div class="aurora-orb"></div>
+        <div class="aurora-orb"></div>
+    </div>
+
+    <!-- LEFT PANEL -->
+    <div class="login-left">
+        <div class="college-brand">
+            <div class="college-logo-wrap">
+                <img src="https://media.licdn.com/dms/image/v2/D560BAQHJIT8-FuU2TA/company-logo_200_200/company-logo_200_200/0/1688781414722?e=2147483647&v=beta&t=bxWJP5MCqw6aGa36-eCMydRjX7ZQMt5sVi9xU-wBlbQ" alt="VEMU Logo" class="college-logo" onerror="this.style.display='none';document.getElementById('logoFb').style.display='flex'"
+                />
+                <div class="logo-fallback" id="logoFb" style="display:none"><i class="fas fa-university"></i></div>
+            </div>
+            <div>
+                <h1 class="college-name">VEMU Institute of Technology</h1>
+                <p class="college-sub">P. Kothakota, Near Pakala, Chittoor Dist., A.P. — 517 112</p>
+                <p class="college-est"><i class="fas fa-award"></i> Estd. 2005 &nbsp;•&nbsp; AICTE Approved &nbsp;•&nbsp; JNTUA Affiliated</p>
+            </div>
+        </div>
+
+        <!-- VEMU campus photo -->
+        <div class="vemu-campus-hero">
+            <img src="https://images.shiksha.com/mediadata/images/1491905641phpAZEI2c.jpeg" alt="VEMU Institute of Technology Campus" class="campus-img" onerror="this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=85'" />
+            <div class="campus-overlay">
+                <div class="campus-title">VEMU Institute of Technology — Chittoor, A.P.</div>
+                <div class="campus-sub">An institution of academic excellence in engineering & technology</div>
+                <div class="campus-divider"></div>
+                <div class="campus-stats">
+                    <div class="cs-item"><span class="cs-num">10K+</span><span class="cs-label">Books</span></div>
+                    <div class="cs-div"></div>
+                    <div class="cs-item"><span class="cs-num">5K+</span><span class="cs-label">Students</span></div>
+                    <div class="cs-div"></div>
+                    <div class="cs-item"><span class="cs-num">500+</span><span class="cs-label">Journals</span></div>
+                    <div class="cs-div"></div>
+                    <div class="cs-item"><span class="cs-num">2005</span><span class="cs-label">Est.</span></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="hero-title">Knowledge is the Key to Success</h2>
+        <p class="hero-desc">VEMU's Central Library — your gateway to academic excellence. Manage books, track dues, donate knowledge, and more with our modern Library Management System.</p>
+        <div class="trust-row">
+            <div class="trust-item"><i class="fas fa-shield-alt"></i><span>Secure Access</span></div>
+            <div class="trust-item"><i class="fas fa-bell"></i><span>Due Alerts</span></div>
+            <div class="trust-item"><i class="fas fa-hand-holding-heart"></i><span>Book Donations</span></div>
+            <div class="trust-item"><i class="fas fa-chart-bar"></i><span>Live Analytics</span></div>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL — LOGIN CARD -->
+    <div class="login-right">
+        <div class="login-card">
+            <div class="lc-head">
+                <div class="lc-icon"><i class="fas fa-book-reader"></i></div>
+                <h2>Library Portal</h2>
+                <p>Sign in to access your account</p>
+            </div>
+
+            <!-- Role selector -->
+            <div class="role-grid">
+                <label class="role-opt active" data-role="admin">
+        <input type="radio" name="role" value="admin" checked/>
+        <div class="ro-icon"><i class="fas fa-user-shield"></i></div>
+        <span>Admin</span>
+      </label>
+                <label class="role-opt" data-role="librarian">
+        <input type="radio" name="role" value="librarian"/>
+        <div class="ro-icon"><i class="fas fa-user-tie"></i></div>
+        <span>Librarian</span>
+      </label>
+                <label class="role-opt" data-role="faculty">
+        <input type="radio" name="role" value="faculty"/>
+        <div class="ro-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <span>Faculty</span>
+      </label>
+                <label class="role-opt" data-role="student">
+        <input type="radio" name="role" value="student"/>
+        <div class="ro-icon"><i class="fas fa-user-graduate"></i></div>
+        <span>Student</span>
+      </label>
+            </div>
+
+            <div class="lc-form">
+                <div class="fg">
+                    <label><i class="fas fa-id-badge"></i> User ID</label>
+                    <input type="text" id="loginId" placeholder="Enter your User ID" autocomplete="off" />
+                </div>
+                <div class="fg">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="pw-box">
+                        <input type="password" id="loginPw" placeholder="Enter your password" autocomplete="off" />
+                        <button type="button" class="pw-toggle" onclick="togglePw()"><i class="fas fa-eye" id="eyeIco"></i></button>
+                    </div>
+                </div>
+                <div class="fg-row">
+                    <label class="ck-label"><input type="checkbox" id="rememberMe"/> Remember Me</label>
+                    <a href="#" class="forgot" onclick="showForgotModal();return false">Forgot password?</a>
+                </div>
+            </div>
+
+            <div class="login-err" id="loginErr"></div>
+
+            <button class="login-btn" onclick="doLogin()">
+      <i class="fas fa-sign-in-alt"></i> Sign In to Library
+    </button>
+
+            <div class="demo-box" style="margin-top:14px">
+                <div class="demo-label"><i class="fas fa-info-circle"></i> Quick Login (click to fill)</div>
+                <div class="demo-items">
+                    <div class="demo-item" onclick="fillDemo('admin','VEMU@admin','admin123')"><i class="fas fa-user-shield"></i><strong>Admin:</strong>&nbsp; VEMU@admin &nbsp;/&nbsp; admin123</div>
+                    <div class="demo-item" onclick="fillDemo('librarian','LIB001','lib123')"><i class="fas fa-user-tie"></i><strong>Librarian:</strong>&nbsp; LIB001 &nbsp;/&nbsp; lib123</div>
+                    <div class="demo-item" onclick="fillDemo('faculty','FAC001','fac123')"><i class="fas fa-chalkboard-teacher"></i><strong>Faculty:</strong>&nbsp; FAC001 &nbsp;/&nbsp; fac123</div>
+                    <div class="demo-item" onclick="fillDemo('student','21VE1A0501','stu123')"><i class="fas fa-user-graduate"></i><strong>Student:</strong>&nbsp; 21VE1A0501 &nbsp;/&nbsp; stu123</div>
+                </div>
+            </div>
+
+            <div class="lc-footer">© 2025 VEMU Institute of Technology — Library Management System v3</div>
+        </div>
+    </div>
+
+    <!-- Forgot Modal -->
+    <div class="modal-overlay" id="forgotModal">
+        <div class="modal-box sm">
+            <div class="modal-hd">
+                <h3><i class="fas fa-key" style="color:var(--gold2)"></i> Password Reset</h3><button class="modal-cls" onclick="closeModal('forgotModal')"><i class="fas fa-times"></i></button></div>
+            <div class="modal-bd">
+                <p class="modal-info">Please contact your Library Administrator or IT Support to reset your password. Your ID cannot be changed.</p>
+                <div class="fg" style="margin-bottom:16px"><label>Your User ID</label><input type="text" placeholder="Enter your User ID" /></div>
+                <button class="btn-primary w100" onclick="showToast('Reset request sent to admin (demo)','success');closeModal('forgotModal')"><i class="fas fa-paper-plane"></i> Send Reset Request</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-wrap" id="toastWrap"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>VEMU LMS — Librarian</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body class="dash-body portal-librarian">
+    <!-- Portal Background Animation -->
+    <div class="portal-bg" id="portalBg">
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+        <div class="bg-orb"></div>
+    </div>
+    <div class="dash-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sb-top">
+                <div class="sb-logo">
+                    <img src="https://www.vemu.ac.in/assets/images/logo.png" alt="VEMU" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                    <div class="sb-logo-fallback" style="display:none"><i class="fas fa-university"></i></div>
+                </div>
+                <div class="sb-brand"><span class="sb-college">VEMU</span><span class="sb-dept">Library System</span></div>
+                <button class="sb-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="sb-user">
+                <div class="sb-avatar" id="sbAvatar">L</div>
+                <div class="sb-info">
+                    <div class="sb-name" id="sbName">Librarian</div>
+                    <div class="sb-role-badge" id="sbRoleBadge">Librarian</div>
+                </div>
+                <div class="sb-online"></div>
+            </div>
+            <nav class="sb-nav">
+                <div class="sb-section">Main</div>
+                <a class="nav-link active" onclick="showSec('dashboard')"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+
+                <div class="sb-section">Books</div>
+                <a class="nav-link" onclick="showSec('addBook')"><i class="fas fa-plus-circle"></i><span>Add New Book</span></a>
+                <a class="nav-link" onclick="showSec('manageBooks')"><i class="fas fa-books"></i><span>Manage Books</span></a>
+                <a class="nav-link" onclick="showSec('searchBooks')"><i class="fas fa-search"></i><span>Search Books</span></a>
+                <a class="nav-link" onclick="showSec('stats')"><i class="fas fa-chart-bar"></i><span>Library Stats</span></a>
+
+                <div class="sb-section">Circulation</div>
+                <a class="nav-link" onclick="showSec('issueBook')"><i class="fas fa-arrow-up"></i><span>Issue Book</span></a>
+                <a class="nav-link" onclick="showSec('returnBook')"><i class="fas fa-undo"></i><span>Return Book</span></a>
+                <a class="nav-link" onclick="showSec('issuedList')"><i class="fas fa-list-alt"></i><span>Issued List</span></a>
+                <a class="nav-link" onclick="showSec('overdue')"><i class="fas fa-exclamation-triangle"></i><span>Overdue</span></a>
+                <a class="nav-link" onclick="showSec('fines')"><i class="fas fa-rupee-sign"></i><span>Fines</span></a>
+
+                <div class="sb-section">Students & Requests</div>
+                <a class="nav-link" onclick="showSec('addStudent')"><i class="fas fa-user-plus"></i><span>Add Student</span></a>
+                <a class="nav-link" onclick="showSec('bookRequests')"><i class="fas fa-hand-paper"></i><span>Book Requests</span></a>
+                <a class="nav-link" onclick="showSec('donations')"><i class="fas fa-hand-holding-heart"></i><span>Donations</span></a>
+
+                <div class="sb-section">Reports</div>
+                <a class="nav-link" onclick="showSec('reports')"><i class="fas fa-file-alt"></i><span>Reports</span></a>
+                <a class="nav-link" onclick="showSec('activity')"><i class="fas fa-history"></i><span>Activity Log</span></a>
+                <a class="nav-link" onclick="showSec('libraryInfo')"><i class="fas fa-info-circle"></i><span>Library Info</span></a>
+                <a class="nav-link" onclick="showSec('profile')"><i class="fas fa-user-circle"></i><span>My Profile</span></a>
+                <a class="nav-link" onclick="showSec('settings')"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </nav>
+            <div class="sb-foot"><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
+        </aside>
+
+        <!-- MAIN AREA -->
+        <div class="main-area">
+            <header class="topbar">
+                <div class="tb-l">
+                    <button class="hamburger" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
+                    <div class="page-breadcrumb">
+                        <img src="https://www.vemu.ac.in/assets/images/logo.png" class="tb-logo" onerror="this.style.display='none'" />
+                        <span id="pageTitle">Dashboard</span>
+                    </div>
+                </div>
+                <div class="tb-r">
+                    <div class="tb-clock"><i class="fas fa-clock"></i><span id="tbClock"></span></div>
+                    <button class="tb-btn" onclick="toggleDark()" title="Toggle Theme"><i class="fas fa-moon" id="darkIcon"></i></button>
+                    <button class="tb-btn notif-btn" onclick="toggleNotif()"><i class="fas fa-bell"></i><span class="notif-badge" id="notifBadge" style="display:none">0</span></button>
+                </div>
+            </header>
+
+            <!-- NOTIFICATION PANEL -->
+            <div class="notif-panel" id="notifPanel">
+                <div class="np-head">
+                    <h4><i class="fas fa-bell"></i> Notifications</h4><button onclick="clearNotifs()">Clear All</button></div>
+                <div id="notifList"></div>
+            </div>
+
+            <div class="content-area">
+
+                <!-- ══ DASHBOARD ══ -->
+                <section class="sec active" id="sec-dashboard">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-th-large"></i> Librarian Dashboard</h2>
+                        <div class="sec-date" id="secDate"></div>
+                    </div>
+                    <div class="vemu-banner">
+                        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1200&q=80&auto=format&fit=crop" class="banner-img" alt="Library" />
+                        <div class="banner-overlay">
+                            <h3>VEMU Central Library</h3>
+                            <p>Manage the collection, circulation, and students — all in one place</p>
+                            <span class="banner-badge"><i class="fas fa-user-tie"></i> Librarian Panel</span>
+                        </div>
+                    </div>
+                    <div class="stats-row" id="libStats"></div>
+                    <div class="dash-grid2" style="margin-top:16px">
+                        <div class="card">
+                            <div class="card-hd">
+                                <h3><i class="fas fa-chart-bar"></i> Books by Category</h3>
+                            </div>
+                            <div class="cat-chart" id="catChart"></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-hd">
+                                <h3><i class="fas fa-fire"></i> Most Borrowed</h3>
+                            </div>
+                            <div class="rank-list" id="mostBorrowed"></div>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top:16px">
+                        <div class="card-hd">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                        </div>
+                        <div class="activity-list" id="dashActivity"></div>
+                    </div>
+                </section>
+
+                <!-- ══ ADD BOOK ══ -->
+                <section class="sec" id="sec-addBook">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-plus-circle"></i> Add New Book</h2>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-grid">
+                            <div class="fg"><label>Book ID *</label><input type="text" id="ab_id" placeholder="e.g. BK015" /></div>
+                            <div class="fg"><label>Book Title *</label><input type="text" id="ab_title" placeholder="Full book title" /></div>
+                            <div class="fg"><label>Author *</label><input type="text" id="ab_author" placeholder="Author name(s)" /></div>
+                            <div class="fg"><label>Category *</label>
+                                <select id="ab_cat">
+              <option value="">Select category</option>
+              <option>Java</option><option>Python</option><option>AI/ML</option>
+              <option>Data Structures</option><option>Web Development</option>
+              <option>Networks</option><option>Operating Systems</option>
+              <option>Mathematics</option><option>Physics</option>
+              <option>Electronics</option><option>Mechanical</option><option>Other</option>
+            </select>
+                            </div>
+                            <div class="fg"><label>Quantity *</label><input type="number" id="ab_qty" placeholder="Number of copies" min="1" /></div>
+                            <div class="fg"><label>Shelf Location</label><input type="text" id="ab_shelf" placeholder="e.g. A-03" /></div>
+                            <div class="fg"><label>ISBN</label><input type="text" id="ab_isbn" placeholder="ISBN number" /></div>
+                            <div class="fg"><label>Publication Year</label><input type="number" id="ab_year" placeholder="e.g. 2023" /></div>
+                            <div class="fg span2"><label>Description</label><textarea id="ab_desc" rows="2" style="resize:vertical" placeholder="Brief description of the book"></textarea></div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="addBook()"><i class="fas fa-plus"></i> Add to Catalog</button>
+                            <button class="btn-ghost" onclick="clearBookForm()"><i class="fas fa-times"></i> Clear</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ══ MANAGE BOOKS ══ -->
+                <section class="sec" id="sec-manageBooks">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-books"></i> Manage Books</h2><button class="btn-primary" onclick="showSec('addBook')"><i class="fas fa-plus"></i> Add Book</button></div>
+                    <div class="table-card" id="booksTable"></div>
+                </section>
+
+                <!-- ══ SEARCH BOOKS ══ -->
+                <section class="sec" id="sec-searchBooks">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-search"></i> Search Books</h2>
+                    </div>
+                    <div class="form-card" style="margin-bottom:16px">
+                        <div class="form-grid">
+                            <div class="fg"><label>Title</label><input type="text" id="srch_title" placeholder="Search by title..." /></div>
+                            <div class="fg"><label>Author</label><input type="text" id="srch_author" placeholder="Search by author..." /></div>
+                            <div class="fg"><label>Category</label>
+                                <select id="srch_cat">
+              <option value="">All Categories</option>
+              <option>Java</option><option>Python</option><option>AI/ML</option>
+              <option>Data Structures</option><option>Web Development</option>
+              <option>Networks</option><option>Operating Systems</option>
+              <option>Mathematics</option><option>Physics</option><option>Other</option>
+            </select>
+                            </div>
+                            <div class="fg"><label>ISBN</label><input type="text" id="srch_isbn" placeholder="ISBN..." /></div>
+                            <div class="fg"><label>Availability</label>
+                                <select id="srch_avail"><option value="">All</option><option value="yes">Available</option><option value="no">Unavailable</option></select>
+                            </div>
+                            <div class="fg"><label>Sort By</label>
+                                <select id="srch_sort"><option value="">Default</option><option value="title">Title A–Z</option><option value="borrow">Most Borrowed</option><option value="available">Most Available</option></select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="searchBooksAdvanced()"><i class="fas fa-search"></i> Search</button>
+                            <button class="btn-ghost" onclick="clearSearch()"><i class="fas fa-times"></i> Clear</button>
+                        </div>
+                        <div id="searchResultsInfo" style="font-size:13px;color:var(--t2);margin-top:10px"></div>
+                    </div>
+                    <div class="books-grid" id="libSearchGrid"></div>
+                </section>
+
+                <!-- ══ LIBRARY STATS ══ -->
+                <section class="sec" id="sec-stats">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-chart-bar"></i> Library Statistics</h2>
+                    </div>
+                    <div id="statsContent"></div>
+                    <div class="dash-grid2" style="margin-top:16px">
+                        <div class="card">
+                            <div class="card-hd">
+                                <h3><i class="fas fa-chart-bar"></i> Books by Category</h3>
+                            </div>
+                            <div class="cat-chart" id="statsCatChart"></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-hd">
+                                <h3><i class="fas fa-trophy"></i> Top Borrowed Books</h3>
+                            </div>
+                            <div class="rank-list" id="popularBooks"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ══ ISSUE BOOK ══ -->
+                <section class="sec" id="sec-issueBook">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-arrow-up"></i> Issue Book</h2>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-grid">
+                            <div class="fg">
+                                <label>Student ID / Name *</label>
+                                <input type="text" id="is_sid" placeholder="Type name or roll number..." oninput="lookupStudentByName(this.value);previewIssue()" />
+                                <div id="stuLookupResults" style="background:var(--card);border:1px solid var(--border);border-radius:var(--rsm);overflow:hidden;position:relative;z-index:10"></div>
+                            </div>
+                            <div class="fg">
+                                <label>Book ID / Title *</label>
+                                <input type="text" id="is_bid" placeholder="Type book ID or title..." oninput="lookupBookByTitle(this.value);previewIssue()" />
+                                <div id="bookLookupResults" style="background:var(--card);border:1px solid var(--border);border-radius:var(--rsm);overflow:hidden;position:relative;z-index:10"></div>
+                            </div>
+                            <div class="fg"><label>Issue Date</label><input type="date" id="is_date" /></div>
+                            <div class="fg"><label>Due Date *</label><input type="date" id="is_due" /></div>
+                        </div>
+                        <div class="issue-preview" id="is_preview" style="display:none"></div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="issueBook()"><i class="fas fa-arrow-up"></i> Issue Book</button>
+                            <button class="btn-ghost" onclick="setVal('is_sid','');setVal('is_bid','');getEl('is_preview').style.display='none';getEl('stuLookupResults').innerHTML='';getEl('bookLookupResults').innerHTML=''"><i class="fas fa-times"></i> Clear</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ══ RETURN BOOK ══ -->
+                <section class="sec" id="sec-returnBook">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-undo"></i> Return Book</h2>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-grid">
+                            <div class="fg"><label>Student ID *</label><input type="text" id="ret_sid" placeholder="e.g. 21VE1A0501" /></div>
+                            <div class="fg"><label>Book ID *</label><input type="text" id="ret_bid" placeholder="e.g. BK001" /></div>
+                            <div class="fg"><label>Return Date</label><input type="date" id="ret_date" /></div>
+                            <div class="fg" style="align-self:end"><button class="btn-ghost w100" onclick="calcReturn()"><i class="fas fa-calculator"></i> Calculate Fine</button></div>
+                        </div>
+                        <div class="fine-preview" id="ret_preview" style="display:none"></div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="returnBook()"><i class="fas fa-undo"></i> Process Return</button>
+                            <button class="btn-ghost" onclick="setVal('ret_sid','');setVal('ret_bid','');getEl('ret_preview').style.display='none'"><i class="fas fa-times"></i> Clear</button>
+                        </div>
+                    </div>
+                    <div style="margin-top:20px">
+                        <div class="card-hd" style="padding:0 0 10px">
+                            <h3 style="font-family:var(--f-display);font-size:15px;display:flex;align-items:center;gap:8px;color:var(--t1)"><i class="fas fa-history" style="color:var(--gold2)"></i> Return History</h3>
+                        </div>
+                        <div class="table-card" id="returnHistory"></div>
+                    </div>
+                </section>
+
+                <!-- ══ ISSUED LIST ══ -->
+                <section class="sec" id="sec-issuedList">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-list-alt"></i> Issued Books</h2>
+                    </div>
+                    <div class="table-card" id="issuedListTable"></div>
+                </section>
+
+                <!-- ══ OVERDUE ══ -->
+                <section class="sec" id="sec-overdue">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Overdue Books</h2>
+                    </div>
+                    <div class="overdue-alert" id="overdueAlert"></div>
+                    <div class="table-card" id="overdueTable"></div>
+                </section>
+
+                <!-- ══ FINES ══ -->
+                <section class="sec" id="sec-fines">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-rupee-sign"></i> Fine Management</h2>
+                    </div>
+                    <div class="table-card" id="finesTable"></div>
+                </section>
+
+                <!-- ══ ADD STUDENT ══ -->
+                <section class="sec" id="sec-addStudent">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-user-plus"></i> Add Student</h2>
+                    </div>
+                    <div class="form-card">
+                        <div class="form-grid" id="libAddStuForm"></div>
+                    </div>
+                </section>
+
+                <!-- ══ BOOK REQUESTS ══ -->
+                <section class="sec" id="sec-bookRequests">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-hand-paper"></i> Student Book Requests</h2>
+                    </div>
+                    <div class="request-strip">
+                        <i class="fas fa-info-circle" style="color:var(--cyan);font-size:20px;flex-shrink:0"></i>
+                        <div>
+                            <h4>Pending Requests from Students</h4>
+                            <p>Review student book requests and approve or reject them below.</p>
+                        </div>
+                    </div>
+                    <div class="table-card" id="libBookRequestsTable"></div>
+                </section>
+
+                <!-- ══ DONATIONS ══ -->
+                <section class="sec" id="sec-donations">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-hand-holding-heart"></i> Book Donations</h2>
+                    </div>
+                    <div class="donation-banner">
+                        <div class="don-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                        <div>
+                            <h3>Manage Book Donations</h3>
+                            <p>Record donations by students and approve pending ones.</p>
+                        </div>
+                    </div>
+                    <div class="form-card" style="margin-bottom:16px">
+                        <div style="font-family:var(--f-display);font-size:16px;font-weight:700;margin-bottom:16px;color:var(--t1)"><i class="fas fa-plus-circle" style="color:var(--gold2)"></i> Record Donation</div>
+                        <div class="form-grid">
+                            <div class="fg"><label>Student Name *</label><input type="text" id="lib_don_student" placeholder="Full name" /></div>
+                            <div class="fg"><label>Roll Number *</label><input type="text" id="lib_don_roll" placeholder="e.g. 21VE1A0501" /></div>
+                            <div class="fg"><label>Book Title *</label><input type="text" id="lib_don_title" placeholder="Book title" /></div>
+                            <div class="fg"><label>Author *</label><input type="text" id="lib_don_author" placeholder="Author name" /></div>
+                            <div class="fg"><label>Category</label>
+                                <select id="lib_don_cat"><option value="">Select</option><option>Java</option><option>Python</option><option>AI/ML</option><option>Data Structures</option><option>Web Development</option><option>Networks</option><option>Operating Systems</option><option>Mathematics</option><option>Physics</option><option>Other</option></select>
+                            </div>
+                            <div class="fg"><label>Condition</label><select id="lib_don_cond"><option>Excellent</option><option>Very Good</option><option>Good</option><option>Fair</option></select></div>
+                            <div class="fg"><label>Copies</label><input type="number" id="lib_don_copies" value="1" min="1" /></div>
+                            <div class="fg"><label>Department</label><input type="text" id="lib_don_dept" placeholder="e.g. B.Tech CSE" /></div>
+                        </div>
+                        <div class="form-actions"><button class="btn-donate" onclick="recordDonationByStaff('lib')"><i class="fas fa-save"></i> Record Donation</button></div>
+                    </div>
+                    <div class="filter-row">
+                        <button class="filter-btn active" onclick="filterDonations(this,'all')">All</button>
+                        <button class="filter-btn" onclick="filterDonations(this,'pending')">Pending</button>
+                        <button class="filter-btn" onclick="filterDonations(this,'approved')">Approved</button>
+                    </div>
+                    <div class="table-card" id="allDonationsTable"></div>
+                </section>
+
+                <!-- ══ REPORTS ══ -->
+                <section class="sec" id="sec-reports">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-file-alt"></i> Reports</h2>
+                    </div>
+                    <div class="report-tabs">
+                        <button class="rtab active" onclick="showReport(this,'issued')"><i class="fas fa-arrow-up"></i> Currently Issued</button>
+                        <button class="rtab" onclick="showReport(this,'returned')"><i class="fas fa-undo"></i> Returned Books</button>
+                        <button class="rtab" onclick="showReport(this,'overdue')"><i class="fas fa-exclamation-triangle"></i> Overdue</button>
+                    </div>
+                    <div class="table-card" id="reportTable"></div>
+                </section>
+
+                <!-- ══ ACTIVITY ══ -->
+                <section class="sec" id="sec-activity">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-history"></i> Activity Log</h2>
+                    </div>
+                    <div class="card">
+                        <div class="activity-list" id="fullActivity"></div>
+                    </div>
+                </section>
+
+                <!-- ══ LIBRARY INFO ══ -->
+                <section class="sec" id="sec-libraryInfo">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-info-circle"></i> Library Information</h2>
+                    </div>
+                    <div id="libraryInfoContent"></div>
+                </section>
+
+                <!-- ══ PROFILE ══ -->
+                <section class="sec" id="sec-profile">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-user-circle"></i> My Profile</h2>
+                    </div>
+                    <div id="profileContent"></div>
+                </section>
+
+                <!-- ══ SETTINGS ══ -->
+                <section class="sec" id="sec-settings">
+                    <div class="sec-hd">
+                        <h2><i class="fas fa-cog"></i> Settings</h2>
+                    </div>
+                    <div id="settingsContent"></div>
+                </section>
+
+            </div>
+            <!-- content-area -->
+        </div>
+        <!-- main-area -->
+    </div>
+    <!-- dash-layout -->
+
+    <!-- EDIT BOOK MODAL -->
+    <div class="modal-overlay" id="editBookModal">
+        <div class="modal-box">
+            <div class="modal-hd">
+                <h3><i class="fas fa-edit" style="color:var(--gold2)"></i> Edit Book</h3><button class="modal-cls" onclick="closeModal('editBookModal')"><i class="fas fa-times"></i></button></div>
+            <div class="modal-bd">
+                <input type="hidden" id="eb_id" />
+                <div class="form-grid">
+                    <div class="fg"><label>Title *</label><input type="text" id="eb_title" /></div>
+                    <div class="fg"><label>Author *</label><input type="text" id="eb_author" /></div>
+                    <div class="fg"><label>Category</label>
+                        <select id="eb_cat"><option>Java</option><option>Python</option><option>AI/ML</option><option>Data Structures</option><option>Web Development</option><option>Networks</option><option>Operating Systems</option><option>Mathematics</option><option>Physics</option><option>Other</option></select>
+                    </div>
+                    <div class="fg"><label>Total Qty</label><input type="number" id="eb_qty" min="1" /></div>
+                    <div class="fg"><label>Shelf</label><input type="text" id="eb_shelf" /></div>
+                </div>
+                <div class="form-actions"><button class="btn-primary" onclick="saveEditBook()"><i class="fas fa-save"></i> Save Changes</button><button class="btn-ghost" onclick="closeModal('editBookModal')">Cancel</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM MODAL -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-box sm">
+            <div class="modal-hd">
+                <h3><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Confirm</h3><button class="modal-cls" onclick="closeModal('confirmModal')"><i class="fas fa-times"></i></button></div>
+            <div class="modal-bd">
+                <p id="confirmMsg" style="margin-bottom:20px;color:var(--t2);line-height:1.6"></p>
+                <div style="display:flex;gap:10px"><button class="btn-danger" id="confirmYes">Yes, Proceed</button><button class="btn-ghost" onclick="closeModal('confirmModal')">Cancel</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-wrap" id="toastWrap"></div>
+    <script src="script.js"></script>
+    <script>
+        initDashboard('librarian');
+    </script>
+</body>
+
+</html>
